@@ -1,0 +1,16 @@
+{
+    "*filter": "present",
+    ":INPUT DROP [56:3541]": "present",
+    ":FORWARD ACCEPT [0:0]": "present",
+    ":OUTPUT ACCEPT [267:18146]": "present",
+    "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT": "present",
+    "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT": "present",
+    "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT": "present",
+    "-A INPUT -j DROP": "present",
+    "-A INPUT -s 192.168.1.35/32 -p tcp -m tcp --dport 22 -j ACCEPT": "present",
+    "-A INPUT -p tcp -m tcp --dport 80 -m limit --limit 25/min --limit-burst 100 -j ACCEPT": "present",
+    "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m limit --limit 1/sec -j ACCEPT": "present",
+    "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP": "present",
+    "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP": "present",
+    "COMMIT": "present"
+}
